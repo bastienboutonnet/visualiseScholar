@@ -52,4 +52,48 @@ histGraph+geom_line(stat='identity',aes(group=1),colour='black')+
 Figure out how to do a tile plot
 ```{r}
 ```
+
+## Todo:
+- have a basic `prepDat()` function:
+  - it will pull out the data, mainly using `scholar()` and prepare it into variables to be used after.
+- make a `genPlot()` function:
+  - this one will just make an appropriate `ggplot()` call to map layers on data
+- make a `pimpPlot()` function:
+  - this one will choose and append to the `genPlot()` output the correct styling options in store.
+  - it will also be the function that outputs the plot viz.
+  - it could also have an option to call for a `customStyle` object which the user will have previously loaded.
+- make a `showBoringPlot()` function:
+  - this one outputs a ggplot element with the "boring" plot to be custom styled.
+
+## Function Repo:
+```{r}
+prepDat <- function(id) {
+  prof=get_profile(id)
+  his=get_citation_history(id)
+  his$year=as.factor(his$year)
+  
+  return(list(prof=prof,his=his))
+}
+
+genPlot <- function(id,his) {
+  dat <- prepDat(id)
+  hist=dat$his
+  histGraph=ggplot(data=hist, aes(x=year, y=cites))
+  return(histGraph)
+}
+
+pimpPlot <- function(histGraph,whichStyle='lines',custStyle=NULL) {
+  if (whichStyle=='lines') {
+    
+  }
+  if (whichStyle=='bars') {
+    
+  }
+  if (whichStyle=='git'){
+    
+  }
+  if (whichStyle=='custom') {
+    #here look up the `custStyle` var
+  }
+}
 ```
