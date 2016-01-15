@@ -1,0 +1,55 @@
+---
+title: "visualiseScholar_workSheet"
+author: "Bastien Boutonnet"
+date: "15 January 2016"
+output: html_document
+---
+
+## Libraries
+```{r}
+library(scholar)
+library(ggplot2)
+library(grid)
+library(gridExtra)
+```
+
+## Example Data
+```{r}
+prof=get_profile('FYrnmlIAAAAJ')
+his=get_citation_history('FYrnmlIAAAAJ')
+his$year=as.factor(his$year)
+```
+
+## Plot styles repo
+### Blue 'gradiant' bar plot
+```{r}
+histGraph=ggplot(data=history, aes(x=year, y=cites,fill=cites)) #fill will colour the bars.
+histGraph+geom_bar(stat='identity',width=.7)+
+    scale_fill_gradient(low = "lightskyblue", high = "steelblue")+ #colours the bars should take
+    theme(panel.background=element_blank())+ #removes grey background
+    theme(panel.grid=element_blank())+ #removes lines for the grid
+    theme(axis.ticks=element_blank())+ #removes ticks on both axes
+    theme(axis.text.y=element_blank())+ #removes tick text for y axis
+    theme(axis.title=element_blank())+ #removes axes titles
+    scale_y_discrete(expand = c(0, 0))+ #makes sure y starts at 0
+    theme(legend.position='none') #removes the legend
+```
+
+### Line & Dot plot
+```{r}
+histGraph=ggplot(data=history, aes(x=year, y=cites))
+histGraph+geom_line(stat='identity',aes(group=1),colour='black')+
+    geom_point(size=3,colour='black',fill='lightskyblue',pch=21)+
+    theme(panel.background=element_blank())+ #removes grey background
+    theme(panel.grid=element_blank())+ #removes lines for the grid
+    theme(axis.ticks=element_blank())+ #removes ticks on both axes
+    theme(axis.text.y=element_blank())+ #removes tick text for y axis
+    theme(axis.title=element_blank())+ #removes axes titles
+    theme(legend.position='none') #removes the legend
+```
+
+### *À la* Github
+Figure out how to do a tile plot
+```{r}
+```
+```
