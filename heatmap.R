@@ -2,6 +2,11 @@ library(scholar)
 library(ggplot2)
 library(grid)
 
+#qZLGnroAAAAJ
+#5PBkBFgAAAAJ
+prof=get_profile('5PBkBFgAAAAJ')
+his=get_citation_history('5PBkBFgAAAAJ')
+
 prof=get_profile('qZLGnroAAAAJ')
 his=get_citation_history('qZLGnroAAAAJ')
 
@@ -38,12 +43,12 @@ grid.text(x=.95, y=.12,just='right', label='source:scholar.google.com',gp=gpar(c
 
 dev.off()
 
-t <- ggplot(his, aes(year, ph,width=.9)) 
+t <- ggplot(his, aes(year, placeholder,width=.9)) 
 t + geom_tile(aes(fill = cites))+
   scale_fill_continuous(limits=c(0,max(his$cites)),breaks=c(min(his$cites),mean(his$cites),max(his$cites)),labels=c("","","more"),name="less",guide="legend",low = "#d6e685", high = "#1e6823",space='Lab', na.value='grey90')+
   scale_x_discrete(expand = c(0, 0)) +
   scale_y_discrete(expand = c(0, 0)) +
-  theme(text=element_text(size=20,family="Helvetica"))+
+  theme(text=element_text(size=12,family="Helvetica"))+
   theme(axis.line=element_blank())+
   theme(axis.text=element_text(colour="black"))+
   theme(axis.text.y=element_blank())+
@@ -55,11 +60,12 @@ t + geom_tile(aes(fill = cites))+
   theme(plot.background=element_rect(fill='transparent',colour="NA"))+
   theme(plot.margin = unit(c(3,1,1,1), "lines"))+
   theme(axis.title=element_blank())+
-  theme(legend.title=element_text(size=20))+
-  theme(legend.text=element_text(size=20))+
-  theme(aspect.ratio=.25)+
+  theme(legend.title=element_text(size=12))+
+  theme(legend.text=element_text(size=12))+
+  #theme(aspect.ratio=.25)+
+  coord_fixed(ratio=1)+
   theme(legend.direction='horizontal')+
   theme(legend.key.size=unit(4,'mm'))+
-  theme(legend.position=c(.64,1.4))
+  theme(legend.position=c(.7,1.7))
 
-ggsave('test.pdf',width=100,height=50,units="mm")
+ggsave('test.pdf',width=200,height=50,units="mm")
