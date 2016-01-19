@@ -6,7 +6,7 @@ prof=get_profile('qZLGnroAAAAJ')
 his=get_citation_history('qZLGnroAAAAJ')
 
 his$year=as.factor(his$year)
-his$ph="a"
+his$placeholder="a"
 
 PimpMyPlot <- theme(text=element_text(size=10,family="Helvetica"))+
   theme(axis.line=element_line(colour='black'))+
@@ -38,14 +38,20 @@ grid.text(x=.95, y=.12,just='right', label='source:scholar.google.com',gp=gpar(c
 
 dev.off()
 
-t <- ggplot(his, aes(year, ph,width=.9)) 
-t + geom_tile(aes(fill = cites), colour = "white")+
-  scale_fill_gradient(low = "#d6e685", high = "#1e6823",space='Lab', na.value='white')+
+t <- ggplot(his, aes(year, ph,width=.9,height=1.5)) 
+t + geom_tile(aes(fill = cites))+
+  scale_fill_continuous(breaks=c(min(his$cites),mean(his$cites),max(his$cites)),labels=c("","","more"),name="less",guide="legend",low = "#d6e685", high = "#1e6823",space='Lab', na.value='white')+
   scale_x_discrete(expand = c(0, 0)) +
   scale_y_discrete(expand = c(0, 0)) +
-  theme_bw()
-+
-
-
-+ 
-  opts(legend.position = "none", axis.ticks = theme_blank(), axis.text.x = theme_text(size = base_size * 0.8, angle = 330, hjust = 0, colour = "grey50"))
+  theme(text=element_text(size=10,family="Helvetica"))+
+  theme(axis.line=element_blank())+
+  theme(axis.text=element_text(colour="black"))+
+  theme(panel.grid.major.y=element_blank())+
+  theme(panel.grid.minor.y=element_blank())+
+  theme(panel.grid.major.x=element_blank())+
+  theme(axis.ticks=element_line(colour='black'))+
+  theme(panel.background=element_rect(fill='transparent',colour="NA"))+
+  theme(plot.background=element_rect(fill='transparent',colour="NA"))+
+  theme(plot.margin = unit(c(3,1,1,1), "lines"))+
+  theme(axis.title=element_text(size=10,face="bold"))+
+  theme(legend.position='bottom')
