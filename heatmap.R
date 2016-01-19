@@ -38,20 +38,28 @@ grid.text(x=.95, y=.12,just='right', label='source:scholar.google.com',gp=gpar(c
 
 dev.off()
 
-t <- ggplot(his, aes(year, ph,width=.9,height=1.5)) 
+t <- ggplot(his, aes(year, ph,width=.9)) 
 t + geom_tile(aes(fill = cites))+
-  scale_fill_continuous(breaks=c(min(his$cites),mean(his$cites),max(his$cites)),labels=c("","","more"),name="less",guide="legend",low = "#d6e685", high = "#1e6823",space='Lab', na.value='white')+
+  scale_fill_continuous(limits=c(0,max(his$cites)),breaks=c(min(his$cites),mean(his$cites),max(his$cites)),labels=c("","","more"),name="less",guide="legend",low = "#d6e685", high = "#1e6823",space='Lab', na.value='grey90')+
   scale_x_discrete(expand = c(0, 0)) +
   scale_y_discrete(expand = c(0, 0)) +
-  theme(text=element_text(size=10,family="Helvetica"))+
+  theme(text=element_text(size=20,family="Helvetica"))+
   theme(axis.line=element_blank())+
   theme(axis.text=element_text(colour="black"))+
+  theme(axis.text.y=element_blank())+
   theme(panel.grid.major.y=element_blank())+
   theme(panel.grid.minor.y=element_blank())+
   theme(panel.grid.major.x=element_blank())+
-  theme(axis.ticks=element_line(colour='black'))+
+  theme(axis.ticks=element_blank())+
   theme(panel.background=element_rect(fill='transparent',colour="NA"))+
   theme(plot.background=element_rect(fill='transparent',colour="NA"))+
   theme(plot.margin = unit(c(3,1,1,1), "lines"))+
-  theme(axis.title=element_text(size=10,face="bold"))+
-  theme(legend.position='bottom')
+  theme(axis.title=element_blank())+
+  theme(legend.title=element_text(size=20))+
+  theme(legend.text=element_text(size=20))+
+  theme(aspect.ratio=.25)+
+  theme(legend.direction='horizontal')+
+  theme(legend.key.size=unit(4,'mm'))+
+  theme(legend.position=c(.64,1.4))
+
+ggsave('test.pdf',width=100,height=50,units="mm")
