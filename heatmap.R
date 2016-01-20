@@ -43,14 +43,15 @@ grid.text(x=.95, y=.12,just='right', label='source:scholar.google.com',gp=gpar(c
 
 dev.off()
 
-t <- ggplot(his, aes(year, placeholder,width=.9)) 
-t + geom_tile(aes(fill = cites))+
-  scale_fill_continuous(limits=c(0,max(his$cites)),breaks=c(min(his$cites),mean(his$cites),max(his$cites)),labels=c("","","more"),name="less",guide="legend",low = "#d6e685", high = "#1e6823",space='Lab', na.value='grey90')+
+png('testHeatmap.png',width=779,height=691,res=300,bg = "transparent")
+t <- ggplot(his, aes(year, placeholder,width=.8,height=.8))+
+  geom_tile(aes(fill = cites))+
+  scale_fill_continuous(limits=c(0,max(his$cites)),breaks=c(min(his$cites),mean(his$cites),max(his$cites)),labels=c("",""," More"),name="Less",guide="legend",low = "#d6e685", high = "#1e6823",space='Lab', na.value='grey90')+
   scale_x_discrete(expand = c(0, 0)) +
   scale_y_discrete(expand = c(0, 0)) +
   theme(text=element_text(size=12,family="Helvetica"))+
   theme(axis.line=element_blank())+
-  theme(axis.text=element_text(colour="black"))+
+  theme(axis.text=element_text(colour="grey30"))+
   theme(axis.text.y=element_blank())+
   theme(panel.grid.major.y=element_blank())+
   theme(panel.grid.minor.y=element_blank())+
@@ -66,6 +67,16 @@ t + geom_tile(aes(fill = cites))+
   coord_fixed(ratio=1)+
   theme(legend.direction='horizontal')+
   theme(legend.key.size=unit(4,'mm'))+
-  theme(legend.position=c(.7,1.7))
+  theme(legend.position='bottom')+
+  theme(legend.background=element_rect(fill='transparent',colour="NA"))
+  #theme(legend.position=c(0.15,-1))
 
-ggsave('test.pdf',width=200,height=50,units="mm")
+print(t,vp=viewport(height=.9))    
+grid.text(x=.95, y=.9,just='right', label=paste('Citations:',prof$total_cites),gp=gpar(col="black", fontsize=11,fontfamily='Helvetica',fontface='bold'))
+grid.text(x=.95, y=.82,just='right', label=paste('h-index:',prof$h_index),gp=gpar(col="black", fontsize=11,fontfamily='Helvetica',fontface='bold'))
+grid.text(x=.95, y=.05,just='right', label=format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"),gp=gpar(col="grey50", fontsize=11,fontfamily='Helvetica',fontface='bold'))
+grid.text(x=.95, y=.12,just='right', label='source:scholar.google.com',gp=gpar(col="grey50", fontsize=11,fontfamily='Helvetica',fontface='bold'))
+
+dev.off()
+
+ggsave('test.png')
